@@ -57,6 +57,8 @@ export default function UserDashboard() {
       method: "POST",
       credentials: "include",
     });
+      localStorage.setItem("token","");
+        localStorage.setItem("user","");
 
     navigate("/"); // 👈 React redirect
   };

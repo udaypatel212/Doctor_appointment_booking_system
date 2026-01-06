@@ -35,6 +35,10 @@ export default function AdminDashboard() {
             method: "POST",
             credentials: "include",
         });
+        localStorage.setItem("adminToken", "");
+
+            // optional (but useful)
+            localStorage.setItem("admin","");
 
         navigate("/");
     };

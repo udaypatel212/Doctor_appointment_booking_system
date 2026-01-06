@@ -13,7 +13,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminAppointments from "./pages/AdminAppointments";
 import UserProtectedRoute from "./components/UserProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
-
+import AdminProtectedRoute from "./components/AdminProtectedRoute";
+import PublicAdminRoute from "./components/PublicAdminRoute";
 
 
 function App() {
@@ -29,12 +30,12 @@ function App() {
 
 
       <Route path="/user/login" element={<PublicRoute> <UserLogin /></PublicRoute>} />
-      <Route path="/user/dashboard" element={<UserProtectedRoute><UserDashboard /></UserProtectedRoute>} />
+      <Route path="/user/dashboard" element={ <UserDashboard /> } />
       <Route path="/user/register" element={<PublicRoute><UserRegister /></PublicRoute>} />
-      
-      <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin/dashboard" element={<AdminDashboard />} />
-      <Route path="/admin/appointments" element={<AdminAppointments />} />
+
+      <Route path="/admin/login" element={<PublicAdminRoute><AdminLogin /></PublicAdminRoute> } />
+      <Route path="/admin/dashboard" element={<AdminProtectedRoute> <AdminDashboard /></AdminProtectedRoute>} />
+      <Route path="/admin/appointments" element={<AdminProtectedRoute><AdminAppointments /></AdminProtectedRoute>} />
 
     </Routes>
   )

@@ -14,38 +14,43 @@ export default function AdminLogin() {
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
-const handleSubmit = async (e) => {
-  e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-  const endpoint =
-    form.role === "superadmin"
-      ? "http://localhost:5000/admin/superadmin_login"
-      : "http://localhost:5000/admin/login";
+        const endpoint =
+            form.role === "superadmin"
+                ? "http://localhost:5000/admin/superadmin_login"
+                : "http://localhost:5000/admin/login";
 
-  try {
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        email: form.email,
-        password: form.password,
-      }),
-    });
+        try {
+            const res = await fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    email: form.email,
+                    password: form.password,
+                }),
+            });
 
-    const data = await res.json();
+            const data = await res.json();
 
-    if (!res.ok) {
-      alert(data.message || "Login failed");
-      return;
-    }
+            if (!res.ok) {
+                alert(data.message || "Login failed");
+                return;
+            }
+            localStorage.setItem("adminToken", data.token);
 
-    // ✅ ALWAYS go to the SAME dashboard
-    navigate("/admin/dashboard");
-  } catch (err) {
-    alert("Server error");
-  }
-};
+            // optional (but useful)
+            localStorage.setItem("admin", JSON.stringify(data.admin));
+
+
+            // ✅ ALWAYS go to the SAME dashboard
+            navigate("/admin/dashboard");
+        } catch (err) {
+            alert("Server error");
+        }
+    };
 
 
     return (

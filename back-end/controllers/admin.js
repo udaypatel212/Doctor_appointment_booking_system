@@ -68,6 +68,7 @@ module.exports.superadmin_login = async (req, res) => {
 
         return res.status(200).json({
             success: true,
+             token:token,
             role: admin.role,
         });
     } catch (err) {
@@ -157,6 +158,7 @@ module.exports.login = async (req, res) => {
 
         return res.status(200).json({
             success: true,
+            token:token,
             role: "admin",
         });
     } catch (err) {
