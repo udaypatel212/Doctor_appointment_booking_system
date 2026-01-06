@@ -20,8 +20,12 @@ export default function UserLogin() {
         { withCredentials: true }
       );
 
+      
       if (res.data.success) {
-        navigate("/user/dashboard"); // 👈 FRONTEND REDIRECT
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+
+        navigate("/user/dashboard"); // 👈 redirect
       }
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");

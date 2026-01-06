@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Navbar from '../components/Navbar'
 export default function AdminDashboard() {
     const [role, setRole] = useState(null);
     const navigate = useNavigate();
@@ -88,6 +88,7 @@ export default function AdminDashboard() {
     return (
         <div className="min-h-screen bg-base-200">
             {/* Header */}
+            <Navbar/>
             <header className="bg-gray-800 text-white py-4 text-center text-2xl font-bold">
                 Admin Dashboard
             </header>

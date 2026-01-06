@@ -11,6 +11,10 @@ import UserRegister from "./pages/UserRegister";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminAppointments from "./pages/AdminAppointments";
+import UserProtectedRoute from "./components/UserProtectedRoute";
+import PublicRoute from "./components/PublicRoute";
+
+
 
 function App() {
   return (
@@ -21,12 +25,16 @@ function App() {
       <Route path="/gallery" element={<Gallery />} />
       <Route path="/doctors" element={<Doctors />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/user/login" element={<UserLogin />} />
-      <Route path="/user/dashboard" element={<UserDashboard />} />
-      <Route path="/user/register" element={<UserRegister />} />
+
+
+
+      <Route path="/user/login" element={<PublicRoute> <UserLogin /></PublicRoute>} />
+      <Route path="/user/dashboard" element={<UserProtectedRoute><UserDashboard /></UserProtectedRoute>} />
+      <Route path="/user/register" element={<PublicRoute><UserRegister /></PublicRoute>} />
+      
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
-      <Route path="/admin/appointments" element={<AdminAppointments/>}/>
+      <Route path="/admin/appointments" element={<AdminAppointments />} />
 
     </Routes>
   )
