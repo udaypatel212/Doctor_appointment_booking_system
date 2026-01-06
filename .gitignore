@@ -1,0 +1,15 @@
+# Node
+node_modules
+.env
+
+# Project specific
+back-end/node_modules
+front-end/node_modules
+
+# Build
+dist
+build
+
+# OS
+.DS_Store
+Thumbs.db
