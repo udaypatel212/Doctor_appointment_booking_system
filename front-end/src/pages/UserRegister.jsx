@@ -19,7 +19,7 @@ export default function UserRegister() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/user/register",
+        "/user/register",
         { name, email, phone }
       );
 

@@ -19,8 +19,8 @@ export default function AdminLogin() {
 
         const endpoint =
             form.role === "superadmin"
-                ? "http://localhost:5000/admin/superadmin_login"
-                : "http://localhost:5000/admin/login";
+                ? "/admin/superadmin_login"
+                : "/admin/login";
 
         try {
             const res = await fetch(endpoint, {

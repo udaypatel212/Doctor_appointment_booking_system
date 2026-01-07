@@ -39,7 +39,7 @@ export default function UserDashboard() {
     setSelectedSlotId(null);
     setSlots([]);
 
-    const res = await fetch("http://localhost:5000/user/book_appointment", {
+    const res = await fetch("/user/book_appointment", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -53,7 +53,7 @@ export default function UserDashboard() {
   };
 
   const handleLogout = async () => {
-    await fetch("http://localhost:5000/user/logout", {
+    await fetch("/user/logout", {
       method: "POST",
       credentials: "include",
     });
@@ -70,7 +70,7 @@ export default function UserDashboard() {
       return;
     }
 
-    const res = await fetch("http://localhost:5000/user/book_appointment", {
+    const res = await fetch("/user/book_appointment", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -156,7 +156,7 @@ export default function UserDashboard() {
         {/* RIGHT: Appointments */}
         <div className="md:col-span-1">
           <div className="card bg-base-100 shadow-xl p-4 rounded-2xl">
-            <ShowAppointment endpoint="http://localhost:5000/user/show_appointment" />
+            <ShowAppointment endpoint="/user/show_appointment" />
           </div>
         </div>
 

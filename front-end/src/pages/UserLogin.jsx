@@ -15,7 +15,7 @@ export default function UserLogin() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/user/login",
+        "/user/login",
         { email, phone },
         { withCredentials: true }
       );

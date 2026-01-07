@@ -9,7 +9,7 @@ export default function AdminDashboard() {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const res = await fetch("http://localhost:5000/admin/me", {
+                const res = await fetch("/admin/me", {
                     credentials: "include",
                 });
 
@@ -31,7 +31,7 @@ export default function AdminDashboard() {
 
     // Logout
     const handleLogout = async () => {
-        await fetch("http://localhost:5000/admin/logout", {
+        await fetch("/admin/logout", {
             method: "POST",
             credentials: "include",
         });
@@ -49,7 +49,7 @@ export default function AdminDashboard() {
         e.preventDefault();
         const f = e.target;
 
-        await fetch("http://localhost:5000/admin/create", {
+        await fetch("/admin/create", {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
@@ -69,7 +69,7 @@ export default function AdminDashboard() {
         e.preventDefault();
         const f = e.target;
 
-        await fetch("http://localhost:5000/admin/generateSlot", {
+        await fetch("/admin/generateSlot", {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },

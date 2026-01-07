@@ -1,9 +1,8 @@
-const mongoose=require("mongoose");
+const mongoose = require("mongoose");
 
-mongoose.connect(`${process.env.MONGO_URI}/dentist`).then(()=>{
-    console.log("connection successful");
-}).catch((e)=>{
-    console.log("no connection");
-});
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("✅MongoDB connected"))
+  .catch(err => console.error("❌ MongoDB error:", err.message));
 
-module.exports=mongoose.connection;
+module.exports = mongoose.connection;
