@@ -27,7 +27,7 @@ require("./dbconnect/connection");
 // middleware
 app.use(cookieParser());
 app.use(cors({
-  origin: CLIENT_URL, // will change later
+  origin: process.env.CLIENT_URL, // will change later
   credentials: true
 }));
 // app.use(cors({
