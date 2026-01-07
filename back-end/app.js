@@ -36,7 +36,8 @@ app.use("/admin", require("./routes/adminRouter"));
 app.use("/user", require("./routes/userRouter"));
 const distPath = path.join(__dirname, "../front-end/dist");
 app.use(express.static(distPath));
-app.get("/*", (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(distPath, "index.html"));
 });
+
 module.exports = app;
