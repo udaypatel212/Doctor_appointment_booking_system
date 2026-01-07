@@ -23,6 +23,17 @@ const adminSchema = new mongoose.Schema({
         type: String,
         enum: ["superadmin", "admin"],
         default: "admin"
+    },
+    specialization:{
+        type:String
+    },
+    experience:{
+        type:String
+    },
+    bio:String,
+    image:{
+        type:String,
+        default:"https://cdn-icons-png.flaticon.com/512/387/387561.png"
     }
 });
               

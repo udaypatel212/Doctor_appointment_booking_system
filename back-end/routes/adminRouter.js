@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const verifySuperAdmin = require("../middlewares/verifySuperadmin");
 const isBothLogin = require("../middlewares/isBothLogin");
-const { login, createadmin, displayAppointments, createSuperadmin, logout, generateSlotsByAdmin, superadmin_login } = require("../controllers/admin");
+const { login, createadmin, displayAppointments, createSuperadmin, logout, generateSlotsByAdmin, superadmin_login, getDoctors } = require("../controllers/admin");
 
 
 // Create Admin — only superadmin can access 
@@ -22,5 +22,5 @@ router.post("/login", login);
 router.post("/logout", logout);
 router.post("/generateSlot", isBothLogin, generateSlotsByAdmin);
 router.get("/appointments", isBothLogin, displayAppointments);
-
+router.get("/doctors",getDoctors);
 module.exports = router;

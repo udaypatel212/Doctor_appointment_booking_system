@@ -8,34 +8,90 @@ const { generateSlots } = require("../utility/generateSlots");
 const { isSunday } = require("../utility/isSunday");
 
 
+// module.exports.createadmin = async (req, res) => {
+//     try {
+//         const { fullname, email, password } = req.body;
+//         const exists = await adminModel.findOne({ email });
+//         if (exists) return res.status(400).send("Admin already exists");
+//         bcrypt.genSalt(10, (err, salt) => {
+//             bcrypt.hash(password, salt, async (err, hash) => {
+//                 if (err) throw err;
+//                 let createdUser = await adminModel.create({
+//                     fullname,
+//                     email,
+//                     password: hash,
+//                     role: "admin",
+//                 });
+//                 return res.status(201).json({
+//                     success: true,
+//                     message: "Admin created successfully",
+//                 });
+
+//             })
+//         })
+//     } catch (err) {
+//         return res.status(500).json({
+//             success: false,
+//             message: err.message
+//         });
+//     }
+// }
+
 module.exports.createadmin = async (req, res) => {
     try {
-        const { fullname, email, password } = req.body;
-        const exists = await adminModel.findOne({ email });
-        if (exists) return res.status(400).send("Admin already exists");
-        bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(password, salt, async (err, hash) => {
-                if (err) throw err;
-                let createdUser = await adminModel.create({
-                    fullname,
-                    email,
-                    password: hash,
-                    role: "admin",
-                });
-                return res.status(201).json({
-                    success: true,
-                    message: "Admin created successfully",
-                });
+        const {
+            fullname,
+            email,
+            password,
+            role,
+            specialization,
+            experience,
+            bio,
+            image
+        } = req.body;
 
-            })
-        })
+        // Check if admin already exists
+        const exists = await adminModel.findOne({ email });
+        if (exists) {
+            return res.status(400).json({
+                success: false,
+                message: "Admin already exists"
+            });
+        }
+
+        // Hash password
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(password, salt);
+
+        // Create admin
+        const createdAdmin = await adminModel.create({
+            fullname,
+            email,
+            password: hash,
+            role: role || "admin",
+            specialization,
+            experience,
+            bio,
+        });
+
+        // Convert to object & remove password
+        const adminData = createdAdmin.toObject();
+        delete adminData.password;
+
+        return res.status(201).json({
+            success: true,
+            message: "Admin created successfully",
+            admin: adminData
+        });
+
     } catch (err) {
         return res.status(500).json({
             success: false,
             message: err.message
         });
     }
-}
+};
+
 
 module.exports.superadmin_login = async (req, res) => {
     try {
@@ -224,6 +280,24 @@ module.exports.displayAppointments = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Server Error",
+        });
+    }
+};
+
+module.exports.getDoctors = async (req, res) => {
+    try {
+        const doctors = await adminModel
+            .find({ role: "admin" })
+            .select("-password");
+
+        res.status(200).json({
+            success: true,
+            doctors
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
         });
     }
 };

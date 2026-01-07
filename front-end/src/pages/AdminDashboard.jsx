@@ -9,7 +9,7 @@ export default function AdminDashboard() {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const res = await fetch("/admin/me", {
+                const res = await fetch("http://localhost:5000/admin/me", {
                     credentials: "include",
                 });
 
@@ -31,14 +31,14 @@ export default function AdminDashboard() {
 
     // Logout
     const handleLogout = async () => {
-        await fetch("/admin/logout", {
+        await fetch("http://localhost:5000/admin/logout", {
             method: "POST",
             credentials: "include",
         });
         localStorage.setItem("adminToken", "");
 
-            // optional (but useful)
-            localStorage.setItem("admin","");
+        // optional (but useful)
+        localStorage.setItem("admin", "");
 
         navigate("/");
     };
@@ -49,7 +49,7 @@ export default function AdminDashboard() {
         e.preventDefault();
         const f = e.target;
 
-        await fetch("/admin/create", {
+        const res = await fetch("http://localhost:5000/admin/create", {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
@@ -57,8 +57,19 @@ export default function AdminDashboard() {
                 fullname: f.fullname.value,
                 email: f.email.value,
                 password: f.password.value,
+                role: f.role.value, // admin / superadmin
+                specialization: f.specialization.value,
+                experience: f.experience.value,
+                bio: f.bio.value,
             }),
         });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            alert(data.message || "Failed to create admin");
+            return;
+        }
 
         alert("Admin created successfully");
         f.reset();
@@ -69,7 +80,7 @@ export default function AdminDashboard() {
         e.preventDefault();
         const f = e.target;
 
-        await fetch("/admin/generateSlot", {
+        await fetch("http://localhost:5000/admin/generateSlot", {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
@@ -92,7 +103,7 @@ export default function AdminDashboard() {
     return (
         <div className="min-h-screen bg-base-200">
             {/* Header */}
-            <Navbar/>
+            <Navbar />
             <header className="bg-gray-800 text-white py-4 text-center text-2xl font-bold">
                 Admin Dashboard
             </header>
@@ -103,15 +114,63 @@ export default function AdminDashboard() {
                 {/* CREATE ADMIN – SUPERADMIN ONLY */}
                 {role === "superadmin" && (
                     <div className="card bg-base-100 shadow-xl p-5">
-                        <h3 className="text-lg font-bold mb-3">Create Admin</h3>
+                        <h3 className="text-lg font-bold mb-3">ADD DOCTOR</h3>
+
                         <form onSubmit={handleCreateAdmin} className="flex flex-col gap-2">
-                            <input name="fullname" placeholder="Full Name" className="input input-bordered" required />
-                            <input name="email" placeholder="Email" className="input input-bordered" required />
-                            <input name="password" placeholder="Password" className="input input-bordered" required />
-                            <button className="btn btn-primary">Create Admin</button>
+                            <input
+                                name="fullname"
+                                placeholder="Full Name"
+                                className="input input-bordered"
+                                required
+                            />
+
+                            <input
+                                name="email"
+                                type="email"
+                                placeholder="Email"
+                                className="input input-bordered"
+                                required
+                            />
+
+                            <input
+                                name="password"
+                                type="password"
+                                placeholder="Password"
+                                className="input input-bordered"
+                                required
+                            />
+
+                            <select name="role" className="select select-bordered">
+                                <option value="admin">Admin</option>
+                                <option value="superadmin">Super Admin</option>
+                            </select>
+
+                            <input
+                                name="specialization"
+                                placeholder="Specialization"
+                                className="input input-bordered"
+                            />
+
+                            <input
+                                name="experience"
+                                placeholder="Experience (e.g. 5 years)"
+                                className="input input-bordered"
+                            />
+
+                            <textarea
+                                name="bio"
+                                placeholder="Short Bio"
+                                className="textarea textarea-bordered"
+                            />
+
+
+                            <button className="btn btn-primary">
+                                Create Admin
+                            </button>
                         </form>
                     </div>
                 )}
+
 
                 {/* GENERATE SLOTS – ALL ADMINS */}
                 <div className="card bg-base-100 shadow-xl p-5">

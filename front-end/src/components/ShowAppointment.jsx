@@ -35,7 +35,7 @@ export default function ShowAppointment({ endpoint }) {
 
     return (
         <div className="space-y-4">
-            <h3 className="text-xl font-bold text-orange-600 mb-2">
+            <h3 className="text-xl font-bzold text-orange-600 mb-2">
                 My Appointments
             </h3>
 

@@ -9,7 +9,7 @@ export default function AdminAppointments() {
     useEffect(() => {
         const fetchAppointments = async () => {
             try {
-                const res = await fetch("/admin/appointments", {
+                const res = await fetch("http://localhost:5000/admin/appointments", {
                     credentials: "include",
                 });
 

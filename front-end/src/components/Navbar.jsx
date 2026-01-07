@@ -69,11 +69,11 @@ export default function Navbar() {
               Doctors
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink to="/contact" className={linkClass}>
               Contact Us
             </NavLink>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>
