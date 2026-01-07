@@ -27,9 +27,13 @@ require("./dbconnect/connection");
 // middleware
 app.use(cookieParser());
 app.use(cors({
-  origin: "http://localhost:5173", // will change later
+  origin: "https://doctor-appointment-booking-system-plu1.onrender.com", // will change later
   credentials: true
 }));
+// app.use(cors({
+//   origin: "http://localhost:5173", // will change later
+//   credentials: true
+// }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/admin", require("./routes/adminRouter"));
