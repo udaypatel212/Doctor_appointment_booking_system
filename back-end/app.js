@@ -27,7 +27,7 @@ require("./dbconnect/connection");
 // middleware
 app.use(cookieParser());
 app.use(cors({
-  origin: "https://doctor-appointment-booking-system-plu1.onrender.com", // will change later
+  origin: CLIENT_URL, // will change later
   credentials: true
 }));
 // app.use(cors({
