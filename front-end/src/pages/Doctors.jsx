@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import axios from "axios";
 
 const FALLBACK_IMAGE =
   "https://cdn-icons-png.flaticon.com/512/387/387561.png";
@@ -8,24 +9,25 @@ export default function Doctors() {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchDoctors = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/admin/doctors");
-        const data = await res.json();
 
-        if (res.ok) {
-          setDoctors(data.doctors);
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+useEffect(() => {
+  const fetchDoctors = async () => {
+    try {
+      const { data } = await axios.get(
+        "http://localhost:5000/admin/doctors"
+      );
 
-    fetchDoctors();
-  }, []);
+      setDoctors(data.doctors);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchDoctors();
+}, []);
+
 
   if (loading) {
     return <div className="text-center mt-20">Loading doctors...</div>;

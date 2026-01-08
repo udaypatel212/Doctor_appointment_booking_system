@@ -225,7 +225,6 @@ module.exports.login = async (req, res) => {
     }
 };
 
-
 module.exports.generateSlotsByAdmin = async (req, res) => {
     try {
         let { dateStr, startHour, endHour, durationMin } = req.body;

@@ -101,7 +101,6 @@ module.exports.book_appointment = async (req, res) => {
   }
 };
 
-
 // Show only appointments of the logged-in user
 module.exports.show_appointment = async (req, res) => {
   try {

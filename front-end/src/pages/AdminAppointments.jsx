@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -6,30 +7,31 @@ export default function AdminAppointments() {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchAppointments = async () => {
-            try {
-                const res = await fetch("http://localhost:5000/admin/appointments", {
-                    credentials: "include",
-                });
 
-                if (!res.ok) {
-                    navigate("/admin/login");
-                    return;
-                }
+useEffect(() => {
+  const fetchAppointments = async () => {
+    try {
+      const { data } = await axios.get(
+        "http://localhost:5000/admin/appointments",
+        { withCredentials: true }
+      );
 
-                const data = await res.json();
-                console.log(data.appointments);
-                setAppointments(data.appointments);
-            } catch (err) {
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
+      console.log(data.appointments);
+      setAppointments(data.appointments);
+    } catch (err) {
+      if (err.response?.status === 401) {
+        navigate("/admin/login");
+      } else {
+        console.error(err);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        fetchAppointments();
-    }, [navigate]);
+  fetchAppointments();
+}, [navigate]);
+
 
     if (loading) {
         return <div className="text-center mt-20">Loading appointments...</div>;
