@@ -83,7 +83,7 @@ module.exports.book_appointment = async (req, res) => {
     user.appointment = newAppointment._id;
     user.slot = slot._id;
     await user.save();
-
+ 
     // 9️⃣ Respond success
     return res.status(200).json({
       message: "Appointment booked successfully ✅",

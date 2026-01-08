@@ -3,8 +3,6 @@ const adminModel = require("../models/admin");
 
 async function isBothLogin(req, res, next) {
   const token = req.cookies.adminToken;
-  console.log("Token received:", req.cookies.adminToken);
-
   if (!token) {
     return res.status(401).json({
       success: false,
