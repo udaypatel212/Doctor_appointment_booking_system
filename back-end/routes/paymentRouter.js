@@ -6,6 +6,7 @@ const Payment = require("../models/paymentModal");
 const Appointment = require("../models/appointment");
 const slotModel = require("../models/slots");
 const { isLoggedIn } = require("../middlewares/isLoggedIn");
+const sendMail = require("../utility/sendMail");
 
 // CREATE ORDER
 router.post("/create-order", isLoggedIn, async (req, res) => {
@@ -105,6 +106,30 @@ router.post("/verify-payment", isLoggedIn, async (req, res) => {
       appointmentTime: slot.startTime,
       users: [user._id],
     });
+    try {
+      await sendMail({
+        to: user.email,
+        subject: "Appointment Confirmed ✅",
+        html: `
+      <h2>Appointment Booked Successfully</h2>
+      <p>Hi <strong>${user.name}</strong>,</p>
+  
+      <p>Your appointment has been successfully booked.</p>
+  
+      <p><strong>Date:</strong> ${date}</p>
+      <p><strong>Time:</strong> ${new Date(slot.startTime).toLocaleTimeString()}</p>
+      <p><strong>Amount Paid:</strong> ₹10</p>
+  
+      <p>Thank you for choosing <strong>MyClinic</strong>.</p>
+  
+      <br/>
+      <p>Regards,<br/>MyClinic Team</p>
+    `,
+      });
+
+    } catch (error) {
+      console.error("Email failed but booking succeeded");
+    }
 
     // 8️⃣ Link appointment & slot to user
     user.appointment = newAppointment._id;

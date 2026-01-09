@@ -20,4 +20,3 @@ app.use("/user", userRouter);
 app.use("/payment", paymentRouter);
 
 module.exports = app;
-
